@@ -1,4 +1,4 @@
-% Kom ihåg att kolumn 1 = stopp -44, kolumn 2 = stopp -43 osv
+
 
 StoppTillKunder = zeros(1248,44);
 k = 1;
@@ -30,13 +30,3 @@ for i = 1:1248
     end
     stoppCount = 0;
 end
-
-
-% k = 1;
-% for i = 1:1248
-% [ROW, KOL] = size(find(StoppTillKunder(i,:)));
-% test(i) = KOL;
-% if test(i) == 1
-%     whereIsStop(i) = find(StoppTillKunder(i,:));
-% end
-% end
