@@ -31,3 +31,33 @@ for i = 1:1248
     end
     stoppCount = 0;
 end
+
+%%
+clear;
+
+load ('kundinfo.mat');
+load ('truckstopinfo.mat');
+load ('DistanceKunder.mat');
+
+KundKoppling = zeros(1248,1);
+
+for i = 1:1248    
+    [row, col] = min(DistanceKunder(i,:));
+    KundKoppling(i) = col;
+end
+
+StoppTillKunder = zeros(1248,44);
+
+for k = 1:44
+    temp = 1;
+    for i = 1:1248
+        if(KundKoppling(i)==k)
+           StoppTillKunder(temp,k) = i;
+           temp = temp + 1;
+        end
+    end
+end
+
+
+StoppTillKunder = StoppTillKunder(any(StoppTillKunder,2),:);
+
