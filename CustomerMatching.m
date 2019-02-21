@@ -1,4 +1,5 @@
-
+load ('DistanceKunder.mat');
+load ('kundinfo.mat');
 
 StoppTillKunder = zeros(1248,44);
 k = 1;
