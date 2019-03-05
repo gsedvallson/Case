@@ -1,14 +1,14 @@
 function makeMove(iMin,jMin,A)
 
 le = length(A)/2;
-j = jMin-1;
+j = jMin;
 disp("i= " + iMin);
 disp("j= " + jMin);
 
 %i=180:-1:1 for j=180:-1:1
 
-for i = iMin+2:j-1
-    for j = jMin+1:-1:i+1
+for i = iMin:j-1
+    for j = jMin:-1:i+1
         tempX = A(i);
         A(i) = A(j);
         A(j) = tempX;

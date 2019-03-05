@@ -19,11 +19,11 @@ le =length(A) / 2;
 %         d= A(i).dist(A(j))+A(mod((i+1),le)).dist(A(mod((j+1),le)))-A(i).dist(A(mod((i+1),le)))-A(j).dist(A(mod((j+1),le)));
 %     end
 % end
+% 
 
 
 
-
-if (j == le)
+if (j == le - 1)
     %d = A[i].dist(A[j]) + A[i + 1].dist(A[0]) - A[i].dist(A[i + 1]) - A[j].dist(A[0]);
     d = sqrt((A(i)-A(j))^2 + (A(i+le)-A(j+le))^2) + sqrt((A(i+1)-A(1))^2 + (A((i+1)+le)-A(1+le))^2) - sqrt((A(i)-A(i+1))^2 + (A(i+le)-A((i+1)+le))^2) - sqrt((A(j)-A(1))^2 + (A(j+le)-A(1+le))^2);
     
