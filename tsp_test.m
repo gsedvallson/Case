@@ -30,7 +30,7 @@ while (counter<number_of_moves)
             end
         end
     end
-    makeMove(iMin,jMin,cords);
+    makeMove2(iMin,jMin,cords);
     counter=counter+1;
 end
 
