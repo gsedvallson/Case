@@ -7,7 +7,7 @@ disp("j= " + jMin);
 
 %i=180:-1:1 for j=180:-1:1
 
-for i = iMin+2:j-1 %j-1 jMin-2
+for i = iMin+2:j-1 % jMin-2
     for j = jMin+1:-1:i+1
         tempX = A(i);
         A(i) = A(j);

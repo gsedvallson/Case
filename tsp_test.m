@@ -14,7 +14,7 @@ d=0;
 iMin=0;
 jMin =0;
 steps = length(cords)/2;
-number_of_moves = 2*steps;
+number_of_moves = 50*steps;
 
 disp("cords före= " + cords);
 
@@ -30,19 +30,40 @@ while (counter<number_of_moves)
             end
         end
     end
-    makeMove2(iMin,jMin,cords);
+    cords2 = makeMove2(iMin,jMin,cords);
     counter=counter+1;
+    if dMin >= 0
+       break; 
+    end
+    
 end
+x2= cords2(1:steps);
+y2 =cords2(steps+1:end);
+
+D = zeros(length(x),1);
+D2 = zeros(length(x),1);
+for i=1:length(x)-1
+D(i) = sqrt(sum((x(i) - x(i+1)) .^ 2 + (y(i) - y(i+1)) .^ 2));
+D2(i) = sqrt(sum((x2(i) - x2(i+1)) .^ 2 + (y2(i) - y2(i+1)) .^ 2)); 
+end
+
+StartCost = sum(D);
+TourCost = sum(D2);
 
 %d=sqrt((cords(1,1)-cords(1,2))^2 + (cords(2,1)-cords(2,2))^2);
 
 
-%%
+%% 
 clear;
-A=1:1:5;
 
-for i=5:-1:1
-    A(i)
-end
+
+
+
+
+
+
+
+
+
 
 
