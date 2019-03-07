@@ -4,34 +4,40 @@ clear;
 load 'stop1_comb.mat';
 X_cordStop=2;
 Y_cordStop=0;
-StartCost = zeros(length(stop_comb),1);
+%StartCost = zeros(length(stop_comb),1);
 TourCost = zeros(length(stop_comb),1);
 
 
-cords = [2  3  3  1	 0	3	2	3	4	3	1	0	5	4	3	0	1	3;  0   1   -3	-1	-1	-3	-1	-1	-3	-3	-1	-1	-3	-3	-3	-1	-1	1];
-
-le = length(cords);
-route = zeros(3,length(cords));
-route(1,:) = cords(1,:);
-route(2,:) = cords(2,:);
-route(3,1) = 1;
 
 for h = 1:length(stop_comb)
     
-    route(3,2:end) = stop_comb(h,:);
-
-    for v=1:le
-        if(route(3,v)==0)
-            cords(1,v)=999;
-            cords(2,v)=999;
-        end
-    end
-    
-    %Den här tar 120 år och kommer crasha hela campus om den får köra tillräckligt länge
-    cords(find(cords==999)) = [];
+    cords = [2  3  3  1	 0	3	2	3	4	3	1	0	5	4	3	0	1	3;  0   1   -3	-1	-1	-3	-1	-1	-3	-3	-1	-1	-3	-3	-3	-1	-1	1];
     
     x = [2  3  3  1	 0	 3	 2	 3	 4	 3	 1	 0	 5	 4	 3	 0	 1	3];
     y = [0  1 -3 -1	-1	-3	-1	-1	-3	-3	-1	-1	-3	-3	-3	-1	-1	1];
+    
+    le = length(cords);
+    
+    route = zeros(3,length(cords));
+    route(1,:) = cords(1,:);
+    route(2,:) = cords(2,:);
+    route(3,1) = 1;
+    route(3,2:length(route)) = stop_comb(h,:);
+    
+    v = 1;
+    while (v <= length(cords))
+        if(route(3,v)==0)
+            cords(:,v)=[];
+            v = v - 1;
+        end
+        if (v == size(cords,2))
+            break;
+        end
+        v = v + 1;
+    end
+    
+    %Den hï¿½r tar 120 ï¿½r och kommer crasha hela campus om den fï¿½r kï¿½ra tillrï¿½ckligt lï¿½nge
+    % cords(find(cords==999)) = [];
     
     counter=0;
     d = 0;
@@ -40,7 +46,7 @@ for h = 1:length(stop_comb)
     steps = length(cords);
     number_of_moves = 50*steps;
     
-    %disp("cords före= " + cords);
+    %disp("cords fï¿½re= " + cords);
     
     while (counter<number_of_moves)
         dMin=10000000;
@@ -65,24 +71,21 @@ for h = 1:length(stop_comb)
     x2 = cords(1,:);
     y2 = cords(2,:);
     
-%     figure(1)
-%     plot([x2 x2(1)],[y2 y2(1)],'k+:')
-%     
-%     figure(2)
-%     plot([x x(1)],[y y(1)],'k+:')
+    %     figure(1)
+    %     plot([x2 x2(1)],[y2 y2(1)],'k+:')
+    %
+    %     figure(2)
+    %     plot([x x(1)],[y y(1)],'k+:')
     
-    D = zeros(length(x),1);
-    D2 = zeros(length(x),1);
-    for i=1:length(x)-1
-        D(i) = sqrt(sum((x(i) - x(i+1)) .^ 2 + (y(i) - y(i+1)) .^ 2));
-        D2(i) = sqrt(sum((x2(i) - x2(i+1)) .^ 2 + (y2(i) - y2(i+1)) .^ 2));
+    D = zeros(length(x2)-1,1);
+    if(size(cords,2) > 1)
+        for i=1:length(x2)-1
+            D(i) = sqrt(sum((x2(i) - x2(i+1)) .^ 2 + (y2(i) - y2(i+1)) .^ 2));
+        end
     end
-    
-    StartCost(k) = sum(D);
-    TourCost(k) = sum(D2);
-% StartCost = sum(D);
-% TourCost = sum(D2);
-      
+    TourCost(h) = sum(D);
+    % StartCost = sum(D);
+    % TourCost = sum(D2);
     
 end
 %%
