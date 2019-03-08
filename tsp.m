@@ -7,6 +7,8 @@ Y_cordStop=0;
 %StartCost = zeros(length(stop_comb),1);
 TourCost = zeros(length(stop_comb),1);
 
+A = ones(131071,1);
+%lägg in som första kolumn i stop_comb!!! 
 
 
 for h = 1:length(stop_comb)
