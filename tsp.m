@@ -88,12 +88,12 @@ for h = 1:length(stop_comb)
             D(end) = sqrt(sum((x2(end) - x2(1)) .^ 2 + (y2(end) - y2(1)) .^ 2));
         end
         
-        if (h == 10)
-            disp("route: " + route);
-            disp("cords " + cords);
-            disp("D: " + D);
-            disp("distD: " + sum(D));
-        end
+%         if (h == 10)
+%             disp("route: " + route);
+%             disp("cords " + cords);
+%             disp("D: " + D);
+%             disp("distD: " + sum(D));
+%         end
         
         TourCost(h) = sum(D);
         % StartCost = sum(D);
