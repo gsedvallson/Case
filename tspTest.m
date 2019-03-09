@@ -10,11 +10,14 @@ TourCost = zeros(length(stop_comb),1);
 
 
 for h = 1:length(stop_comb)
-
+    
+    cust = [0 31 68 240 306 359 423 588 593 664 722 761 765 948 1002 1036 1154 1219];
     x = [2  3  3  1	 0	 3	 2	 3	 4	 3	 1	 0	 5	 4	 3	 0	 1	3];
     y = [0  1 -3 -1	-1	-3	-1	-1	-3	-3	-1	-1	-3	-3	-3	-1	-1	1];
-    cords = [x;  y];
+    dem = [0 1 1 2 1 1 1 1 1 1 1 2 1 1 2 1 1 1];
+    cords = [cust; x;  y; dem];
    
+    
     le = length(cords);
     
     route = zeros(3,length(cords));
@@ -25,7 +28,7 @@ for h = 1:length(stop_comb)
 
     v = 1;
     v1 = 1;
-    while (v <= size(cords,2))
+    while (v <= size(cords,4))
         if(route(3,v1)==0)
             cords(:,v)=[];
             v = v - 1;
