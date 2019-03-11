@@ -164,20 +164,31 @@ alla_stopp = 1:length(DistanceKunder(1,:));
 inte_anvanda_stopp = setdiff(alla_stopp,anvanda_stopp);
 
 for i = 1:length(inte_anvanda_stopp)
-     temp_size = length(klar_Matris(:,inte_anvanda_stopp(i)))- length(NyStoppTillKunder(:,inte_anvanda_stopp(i)));
-     klar_Matris(:,inte_anvanda_stopp(i)) = [NyStoppTillKunder(:,inte_anvanda_stopp(i));zeros(temp_size,1)];
+    temp_size = length(klar_Matris(:,inte_anvanda_stopp(i)))- length(NyStoppTillKunder(:,inte_anvanda_stopp(i)));
+    klar_Matris(:,inte_anvanda_stopp(i)) = [NyStoppTillKunder(:,inte_anvanda_stopp(i));zeros(temp_size,1)];
 end
 klar_Matris = klar_Matris(any(klar_Matris,2),:);
 farre_stopp = sum(klar_Matris(1,:)==0);
 
 disp(['Med krav på minst ', num2str(minsta_antal), ' blir ', num2str(farre_stopp), ' utan kunder']);
-% X_kunder = Kundinfo(1:1248,2);
-% Y_kunder = Kundinfo(1:1248,3);
-% sz1 = 5;
-% X_stop = truckstopinfo(:,2);
-% Y_stop = truckstopinfo(:,3);
-% sz2 = 10;
-% scatter(X_kunder,Y_kunder,sz1)
-% hold on
-% scatter(X_stop,Y_stop,sz2)
-% hold on
+
+X_kunder = Kundinfo(1:1248,2);
+Y_kunder = Kundinfo(1:1248,3);
+sz1 = 5;
+X_stop = truckstopinfo(:,2);
+Y_stop = truckstopinfo(:,3);
+sz2 = 20;
+tp = 1;
+for i = 1:length(klar_Matris(1,:))
+    if(klar_Matris(1,i)== 0)
+        X_non_use(tp) = X_stop(i);
+        Y_non_use(tp) = Y_stop(i);
+        tp = tp + 1;
+        X_stop(i) = [];
+        Y_stop(i) = [];
+    end
+end
+scatter(X_kunder,Y_kunder,sz1, 'b')
+hold on
+scatter(X_stop,Y_stop,sz2,'g')
+scatter(X_non_use,Y_non_use,sz2,'r')

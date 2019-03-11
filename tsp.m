@@ -6,46 +6,50 @@ load 'stop1_comb.mat';
 X_cordStop=2;
 Y_cordStop=0;
 %StartCost = zeros(length(stop_comb),1);
-TourCost = zeros(length(stop_comb),1);
+%TourCost = zeros(length(stop_comb),1);
 
 
-for h = 1:length(stop_comb)
+%for h = 1:length(stop_comb)
 
-    x = [2  3  3  1	 0	 3	 2	 3	 4	 3	 1	 0	 5	 4	 3	 0	 1	3];
-    y = [0  1 -3 -1	-1	-3	-1	-1	-3	-3	-1	-1	-3	-3	-3	-1	-1	1];
-    cords = [x;  y];
+    %x = [2  3  3  1	 0	 3	 2	 3	 4	 3	 1	 0	 5	 4	 3	 0	 1	3];
+    %y = [0  1 -3 -1	-1	-3	-1	-1	-3	-3	-1	-1	-3	-3	-3	-1	-1	1];
+    cust = [ 0 31	68	240	306	359	423	588	593	664	722	761	765	948	1002	1036	1154	1219	244	425	1096	1125	58	72	114	215	314	383	436	768	903	1103	1126	1224	1235];
+    x= [2	3	3	1	0	3	2	3	4	3	1	0	5	4	3	0	1	3	2	2	2	1	1	1	-1	0	2	0	1	0	2	0	1	1	1];
+    y=[0	1	-3	-1	-1	-3	-1	-1	-3	-3	-1	-1	-3	-3	-3	-1	-1	1	2	2	2	1	4	3	4	7	3	5	5	6	3	3	4	5	4];
+
+    cords = [x;  y; cust];
    
     le = length(cords);
     
-    route = zeros(3,length(cords));
-    route(1,:) = x;
-    route(2,:) = y;
-    route(3,1) = 1;
-    route(3,2:length(route)) = stop_comb(h,:);
+%     route = zeros(3,length(cords));
+%     route(1,:) = x;
+%     route(2,:) = y;
+%     route(3,1) = 1;
+%     route(3,2:length(route)) = stop_comb(h,:);
 
-    v = 1;
-    v1 = 1;
-    while (v <= size(cords,2))
-        if(route(3,v1)==0)
-            cords(:,v)=[];
-            v = v - 1;
-        end
-        
-        if (v == length(route))
-            break;
-        end
-        v = v + 1;
-        v1 = v1 + 1;
-    end
+%     v = 1;
+%     v1 = 1;
+%     while (v <= size(cords,2))
+%         if(route(3,v1)==0)
+%             cords(:,v)=[];
+%             v = v - 1;
+%         end
+%         
+%         if (v == length(route))
+%             break;
+%         end
+%         v = v + 1;
+%         v1 = v1 + 1;
+%     end
     
 %     if(sum(cords(4,:)) > 10)
 %        stop_comb(h) = []; 
 %     end
     
-    counter=0;
+    counter = 0;
     d = 0;
-    iMin=0;
-    jMin =0;
+    iMin = 0;
+    jMin = 0;
     steps = length(cords);
     number_of_moves = 50*steps;
     
@@ -73,18 +77,21 @@ for h = 1:length(stop_comb)
     x2 = cords(1,:);
     y2 = cords(2,:);
     
-    %     figure(1)
-    %     plot([x2 x2(1)],[y2 y2(1)],'k+:')
-    %
-    %     figure(2)
-    %     plot([x x(1)],[y y(1)],'k+:')
+        figure(1)
+        plot([x2 x2(1)],[y2 y2(1)],'k+:')
     
-    D = zeros(length(x2),1);
+        figure(2)
+        plot([x x(1)],[y y(1)],'k+:')
+    
+    D = zeros(length(x),1);
+    D2 = zeros(length(x2),1);
     if(size(cords,2) > 1)
         for i=1:length(x2)-1
-            D(i) = sqrt(sum((x2(i) - x2(i+1)) .^ 2 + (y2(i) - y2(i+1)) .^ 2));
+            D(i) = sqrt(sum((x(i) - x(i+1)) .^ 2 + (y(i) - y(i+1)) .^ 2));
+            D2(i) = sqrt(sum((x2(i) - x2(i+1)) .^ 2 + (y2(i) - y2(i+1)) .^ 2));
         end
-        D(end) = sqrt(sum((x2(end) - x2(1)) .^ 2 + (y2(end) - y2(1)) .^ 2));
+        D(end) = sqrt(sum((x(end) - x(1)) .^ 2 + (y(end) - y(1)) .^ 2));
+        D2(end) = sqrt(sum((x2(end) - x2(1)) .^ 2 + (y2(end) - y2(1)) .^ 2));
     end
     
 %         
@@ -97,9 +104,9 @@ for h = 1:length(stop_comb)
     
 
 
-    TourCost(h) = sum(D);
-    % StartCost = sum(D);
-    % TourCost = sum(D2);
+    %TourCost(h) = sum(D);
+    StartCost = sum(D);
+    TourCost = sum(D2);
     
-end
+%end
 toc
