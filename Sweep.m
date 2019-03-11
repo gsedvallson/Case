@@ -26,6 +26,7 @@ for i = 1:length(kunder(1,:))
     dist_stop(i) = sqrt((Stopp(2,1)-kunder(2,i))^2 + (Stopp(3,1)-kunder(3,i))^2);
     if(i~=length(kunder(1,:)))
         dist_next(i) = sqrt((kunder(2,i+1)-kunder(2,i))^2 + (kunder(3,i+1)-kunder(3,i))^2);
+    else
     end
 end
 dist_next(i) = 0;
