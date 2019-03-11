@@ -14,7 +14,9 @@ for k=1:n
     tempY = A(2,i+1);
     A(2,i+1) = A(2,j);
     A(2,j) = tempY;
-    
+    tempCust = A(3,i+1);
+    A(3,i+1) = A(3,j);
+    A(3,j) = tempCust;
     i = i + 1;
     j = j - 1;
     

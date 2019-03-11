@@ -123,8 +123,8 @@ newRoute = zeros(7,1);
 % route = [0 17 18 19 41 28 29 0 0 0]';
 % route = [0 29 20 21 30	31 36 35 9 0]';
 % route = [0 34 44 26 23 10 13 0 0 0]';
-% route = [1 38 44 25 26 41 15];
-% route = [1 35 45 27 24 11 14];
+%route = [1 38 44 25 26 41 15];
+route = [ 34 44 26 23 10 13 ]
 
 distBefore = zeros(1,7);
 for i = 1:length(route)-1
@@ -147,7 +147,7 @@ costBefore = sum(distBefore(:));
         for k=1:(steps-2)
             for l=(k+3):(steps)
                     d = evalmove2(k,l,route,dist_truck);
-                    if(counter==2)
+                    if(counter==0)
                         disp("d: " + d + ", " + k + " och " + l);
                         disp("Avstand mellan " + k + " och " + l + " = " + dist_truck(route(k),route(l)));
                     end 
@@ -158,11 +158,11 @@ costBefore = sum(distBefore(:));
                 end
             end
         end
-        if(counter==2)
+        if(counter==0)
             disp("dMin: " + dMin);
             disp("Valt avstånd är mellan " + iMin + " och " + jMin + " som är " + dist_truck(route(iMin),route(jMin)));
         end
-        route = makeMove2(iMin,jMin,route);
+        newRoute = makeMove2(iMin,jMin,route);
         counter = counter+1;
         if dMin >= 0
             break;
@@ -173,9 +173,9 @@ costBefore = sum(distBefore(:));
  
 distAfter = zeros(8,1);
 for i = 1:length(route)-1
-    distAfter(i) = dist_truck(route(i), route(i+1));
+    distAfter(i) = dist_truck(newRoute(i), newRoute(i+1));
 end
-distAfter(end) = dist_truck(route(end), route(1));
+distAfter(end) = dist_truck(newRoute(end), newRoute(1));
 costAfter = sum(distAfter(:));
 
 
