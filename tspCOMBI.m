@@ -2,18 +2,19 @@
 tic
 clc;
 clear;
-load 'stop1_comb.mat';
-X_cordStop=2;
-Y_cordStop=0;
-%StartCost = zeros(length(stop_comb),1);
+load 'stop33_comb.mat';
+% X_cordStop=2;
+% Y_cordStop=0;
+% StartCost = zeros(length(stop_comb),1);
 TourCost = zeros(length(stop_comb),1);
 
 
 for h = 1:length(stop_comb)
 
-    x = [2  3  3  1	 0	 3	 2	 3	 4	 3	 1	 0	 5	 4	 3	 0	 1	3];
-    y = [0  1 -3 -1	-1	-3	-1	-1	-3	-3	-1	-1	-3	-3	-3	-1	-1	1];
-    cords = [x;  y];
+    x = [-125 -126 -124 -122 -129 -122 -128 -128 -121 -124 -124	-123 -121 -121 -122	-125];
+    y = [130 128 137 138 136 118 135 134 134 121 130 135 126 134 124 140];
+    cust = [0 214 460 483 509 574 647 680 772 930 956 995 1124 1139 1178 1225];
+    cords = [x;  y; cust];
    
     le = length(cords);
     
@@ -46,14 +47,16 @@ for h = 1:length(stop_comb)
     d = 0;
     iMin=0;
     jMin =0;
-    steps = length(cords);
+    steps = size(cords,2);
     number_of_moves = 50*steps;
     
-    
+    if(size(cords,2) < 3)
+         TourCost(h) = 2 * (sqrt((cords(1,1) - cords(1,2)) .^ 2 + (cords(2,1) - cords(2,2)) .^ 2));
+    else
     while (counter<number_of_moves)
         dMin=10000000;
         for k=1:(steps-2)
-            for l=(k+3):(steps)
+            for l=(k+2):(steps)
                 d = evalMove(k,l,cords);
                 if(d<dMin)
                     iMin = k;
@@ -88,18 +91,24 @@ for h = 1:length(stop_comb)
     end
     
         
-        if (h == 1000)
+        if (h == 32689)
             disp("route: " + route);
             disp("cords " + cords);
             disp("D: " + D);
             disp("distD: " + sum(D));
         end
-    
-
-
+   
     TourCost(h) = sum(D);
     % StartCost = sum(D);
     % TourCost = sum(D2);
-    
+    end
 end
+
+
 toc
+
+%%
+
+maxDist = max(TourCost);
+
+find(any(TourCost==maxDist,2))
