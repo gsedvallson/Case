@@ -4,6 +4,7 @@ clear;
 load ('kundinfo.mat');
 load ('truckstopinfo.mat');
 load ('stopp_nr1');
+stopp_
 %===========================================
 Stopp = stopp_nr1(:,1);
 kunder = stopp_nr1;
@@ -59,4 +60,4 @@ end
 info_resa(1,tp1) = stoppTillKund + temp(1) + dist_stop(i-1) - dist_next(i-1);
 info_resa(2,tp1) = temp(2);
 
-Cost = info_resa
+Cost = 2*info_resa(1,:)
