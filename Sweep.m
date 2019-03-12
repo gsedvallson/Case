@@ -3,11 +3,11 @@ clear;
 
 load ('kundinfo.mat');
 load ('truckstopinfo.mat');
-load ('stopp_nr44');
+load ('stopp_nr37');
 
 %===========================================
-Stopp = stopp_nr44(:,1);
-kunder = stopp_nr44;
+Stopp = stopp_nr37(:,1);
+kunder = stopp_nr37;
 kunder(:,1) = [];
 MaxKap = 10;
 MaxDist = 50;

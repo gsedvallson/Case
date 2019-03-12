@@ -132,6 +132,8 @@ for i = 1:length(potential(1,:))
     end
 end
 
+
+
 tp3 = 1;
 klar_Matris = zeros(size(DistanceKunder));
 
