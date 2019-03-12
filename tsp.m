@@ -3,49 +3,22 @@ tic
 clc;
 clear;
 load 'stop1_comb.mat';
-X_cordStop=2;
-Y_cordStop=0;
-%StartCost = zeros(length(stop_comb),1);
-%TourCost = zeros(length(stop_comb),1);
+% X_cordStop=2;
+% Y_cordStop=0;
 
-
-%for h = 1:length(stop_comb)
 
     %x = [2  3  3  1	 0	 3	 2	 3	 4	 3	 1	 0	 5	 4	 3	 0	 1	3];
     %y = [0  1 -3 -1	-1	-3	-1	-1	-3	-3	-1	-1	-3	-3	-3	-1	-1	1];
-    cust = [ 0 31	68	240	306	359	423	588	593	664	722	761	765	948	1002	1036	1154	1219	244	425	1096	1125	58	72	114	215	314	383	436	768	903	1103	1126	1224	1235];
-    x= [2	3	3	1	0	3	2	3	4	3	1	0	5	4	3	0	1	3	2	2	2	1	1	1	-1	0	2	0	1	0	2	0	1	1	1];
-    y=[0	1	-3	-1	-1	-3	-1	-1	-3	-3	-1	-1	-3	-3	-3	-1	-1	1	2	2	2	1	4	3	4	7	3	5	5	6	3	3	4	5	4];
-
+%     x = [-125 -124 -123 -124 -128 -128 -129 -125 -122 -121 -122 -126];
+%     y = [130 130 135 137 134 135 136 140 138 134 118 128];
+%     cust = [0 956 995 460 680 647 509 1225 483 772 574 214]; 
+ x = [-125 -126 -124 -122 -129 -122 -128 -128 -121 -124 -124 -123 -121 -121 -122	-125];
+    y = [130 128 137 138 136 118 135 134 134 121 130 135 126 134 124 140];
+    cust = [0 214 460 483 509 574 647 680 772 930 956 995 1124 1139 1178 1225];
+    
     cords = [x;  y; cust];
    
     le = length(cords);
-    
-%     route = zeros(3,length(cords));
-%     route(1,:) = x;
-%     route(2,:) = y;
-%     route(3,1) = 1;
-%     route(3,2:length(route)) = stop_comb(h,:);
-
-%     v = 1;
-%     v1 = 1;
-%     while (v <= size(cords,2))
-%         if(route(3,v1)==0)
-%             cords(:,v)=[];
-%             v = v - 1;
-%         end
-%         
-%         if (v == length(route))
-%             break;
-%         end
-%         v = v + 1;
-%         v1 = v1 + 1;
-%     end
-    
-%     if(sum(cords(4,:)) > 10)
-%        stop_comb(h) = []; 
-%     end
-    
     counter = 0;
     d = 0;
     iMin = 0;
@@ -57,8 +30,11 @@ Y_cordStop=0;
     while (counter<number_of_moves)
         dMin=10000000;
         for k=1:(steps-2)
-            for l=(k+3):(steps)
+            for l=(k+2):(steps)
                 d = evalMove(k,l,cords);
+                    if(counter==140)
+                        disp("d: " + d + " mellan " + k + " och " + l);
+                    end 
                 if(d<dMin)
                     iMin = k;
                     jMin = l;
@@ -66,6 +42,9 @@ Y_cordStop=0;
                 end
             end
         end
+              if(counter==0)
+        disp("dMin: " + dMin);
+              end
         cords = makeMove(iMin,jMin,cords);
         counter = counter+1;
         if dMin >= 0

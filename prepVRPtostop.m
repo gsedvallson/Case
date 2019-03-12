@@ -17,114 +17,39 @@ end
 
 
 toc;
-%% calculate distances truckroutes
+
+%% Calculate distances for truck routes
 clear
 clc
 load('dist_truck');
 load('truck_stop_coord');
 
-route = zeros(8,10);
-newRoute = zeros(8,10);
+%Aktivera en i taget
 
-route(1,:) = [0 3 0 0 0 0 0 0 0 0]';
-route(2,:) = [0 5 9 10 11 32 33 0 0 0]';
-route(3,:) = [0 13 16 2 22 3 0 0 0 0]';
-route(4,:) = [0 44 38 39 42	14 1 0 0 0]';
-route(5,:) = [0 17 18 19 41 28 29 0 0 0]';
-route(6,:) = [0 29 20 21 30	31 36 35 9 0]';
-route(7,:) = [0 34 44 26 23 10 13 0 0 0]';
-route(8,:) = [0 37 43 24 25 40 14 0 0 0]';
+% [0 3] =>
+%route = [1 4];
 
-distBefore = zeros(8,9);
-costBefore = zeros(8,1);
-for i = 1:8
-    for j = 1:8
-        distBefore(i,j) = dist_truck(route(i,j)+1, route(i,j+1)+1);
-    end
-    costBefore(i) = sum(distBefore(i,:));
-end
+% [0 5 9 10 11 32 33] =>
+%route = [1 6 10 11 12 33 34];
 
+% [0 13 16 2 22 3] =>
+%route = [1 14 17 3 23 4];
 
-for h = 1:8
-    
-    thisRoute = route(h,:);
-    counter=0;
-    d = 0;
-    iMin=0;
-    jMin =0;
-    steps = length(thisRoute);
-    number_of_moves = 50*steps;
-    
-    
-    while (counter<number_of_moves)
-        dMin=10000000;
-        for k=1:(steps-2)
-            for l=(k+3):(steps)
-                    d = evalmove2(k+1,l+1,thisRoute,dist_truck);
-                if(d<dMin)
-                    iMin = k;
-                    jMin = l;
-                    dMin = d;
-                end
-            end
-        end
-        
-        thisRoute = makeMove2(iMin,jMin,thisRoute);
-        counter = counter+1;
-        if dMin >= 0
-            
-            break;
-        end
-        
-    end
-    
-    newRoute(h,:) = thisRoute;
-    
-end
+% [0 44 38 39 42 14 1] =>
+%route = [1 45 39 40 43 15 2];
 
-distAfter = zeros(8,9);
-costAfter = zeros(8,1);
-for i = 1:8
-    for j = 1:8
-        distAfter(i,j) = dist_truck(newRoute(i,j)+1, newRoute(i,j+1)+1);
-    end
-    costAfter(i) = sum(distAfter(i,:));
-end
+% [0 17 18 19 41 28 29] =>
+%route = [1 18 19 20 42 29 30];
 
-totAfther=0;
-for i=1:length(costAfter)
-    totAfther= totAfther + costAfter(i);
-end
+% [0 29 20 21 30 31 36 35 9] =>
+%route = [1 30 21 22 31 32 37 36 10];
 
-totBefore= 0;
-for i=1:length(costBefore)
-    totBefore= totBefore + costBefore(i);
-end
+% [0 34 44 26 23 10 13] =>
+%route = [1 35 45 27 24 11 14];
 
+% [0 37 43 24 25 40 14] =>
+route = [1 38 44 25 26 41 15];
 
-
-
-
-%%
-
-%% *****HÄR TESTAR VI*****
-clear
-clc
-load('dist_truck');
-load('truck_stop_coord');
-
-% route = zeros(8,10);
-newRoute = zeros(7,1);
-
-% route = [0 3 0 0 0 0 0 0 0 0]';
-% route = [0 5 9 10 11 32 33 0 0 0]';
-% route = [0 13 16 2 22 3 0 0 0 0]';
-% route = [0 44 38 39 42	14 1 0 0 0]';
-% route = [0 17 18 19 41 28 29 0 0 0]';
-% route = [0 29 20 21 30	31 36 35 9 0]';
-% route = [0 34 44 26 23 10 13 0 0 0]';
-% route = [1 38 44 25 26 41 15];
-% route = [1 35 45 27 24 11 14];
 
 distBefore = zeros(1,7);
 for i = 1:length(route)-1
@@ -145,22 +70,14 @@ costBefore = sum(distBefore(:));
     while (counter<number_of_moves)
         dMin=10000000;
         for k=1:(steps-2)
-            for l=(k+3):(steps)
+            for l=(k+2):(steps)
                     d = evalmove2(k,l,route,dist_truck);
-                    if(counter==2)
-                        disp("d: " + d + ", " + k + " och " + l);
-                        disp("Avstand mellan " + k + " och " + l + " = " + dist_truck(route(k),route(l)));
-                    end 
                 if(d<dMin)
                     iMin = k;
                     jMin = l;
                     dMin = d;
                 end
             end
-        end
-        if(counter==2)
-            disp("dMin: " + dMin);
-            disp("Valt avstånd är mellan " + iMin + " och " + jMin + " som är " + dist_truck(route(iMin),route(jMin)));
         end
         route = makeMove2(iMin,jMin,route);
         counter = counter+1;
@@ -171,15 +88,15 @@ costBefore = sum(distBefore(:));
     end
     
  
-distAfter = zeros(8,1);
+distAfter = zeros(1,7);
 for i = 1:length(route)-1
     distAfter(i) = dist_truck(route(i), route(i+1));
 end
 distAfter(end) = dist_truck(route(end), route(1));
 costAfter = sum(distAfter(:));
 
-
-
+newRoute = route - 1
+costAfter
 
 
 
