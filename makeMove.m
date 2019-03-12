@@ -1,4 +1,5 @@
-function cords = makeMove(iMin,jMin,A)
+function cords = makeMove(iMin,jMin,A) 
+%Används för byte med givna koordinater
 
 i = iMin;
 j = jMin;

@@ -2,17 +2,25 @@
 clear;
 clc;
 tic;
-d=(dec2bin(1:32767));
-stop_ny = zeros(32767,15);
+d=(dec2bin(1:131071));
+stop_ny = zeros(32767,17);
 
 
 for i=1:length(d)
-    for j=1:15
+    for j=1:17
         stop_ny(i,j) = str2num(d(i,j));
     end
 end
 
 toc;
+%%
+clear;
+K = 19;
+size = (2^K)-1;
+d=de2bi(1:size);
+
+
+
 
 %%
 clc;

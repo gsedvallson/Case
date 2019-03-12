@@ -1,4 +1,5 @@
 function newRoute = makeMove2(iMin,jMin,A)
+%Används för byte med givna avstånd
 
 i = iMin;
 j = jMin;

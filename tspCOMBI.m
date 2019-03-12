@@ -1,19 +1,24 @@
+%% Generera binär talföljd för kundkombinationer - GÖRS FÖRST
+
+clear;
+K = 15;
+size = (2^K)-1;
+stop_comb = de2bi(1:size);
+clear size;
+
 %% TSP for stop 1 neighborhood search
 tic
 clc;
-clear;
-load 'stop33_comb.mat';
-% X_cordStop=2;
-% Y_cordStop=0;
-% StartCost = zeros(length(stop_comb),1);
+%load 'stop33_comb.mat';
+
 TourCost = zeros(length(stop_comb),1);
 
 
 for h = 1:length(stop_comb)
 
-    x = [-125 -126 -124 -122 -129 -122 -128 -128 -121 -124 -124	-123 -121 -121 -122	-125];
-    y = [130 128 137 138 136 118 135 134 134 121 130 135 126 134 124 140];
-    cust = [0 214 460 483 509 574 647 680 772 930 956 995 1124 1139 1178 1225];
+    x = [11	12	16	14	14	17	17	17	14	11	15	14	13	12	12	15];
+    y = [12	12	10	15	14	12	13	12	10	13	15	14	12	15	13 14];
+    cust = [0 144 147 237 262 361 363 473 476 669 692 748 796 837 1001 1037];
     cords = [x;  y; cust];
    
     le = length(cords);
@@ -38,10 +43,6 @@ for h = 1:length(stop_comb)
         v = v + 1;
         v1 = v1 + 1;
     end
-    
-%     if(sum(cords(4,:)) > 10)
-%        stop_comb(h) = []; 
-%     end
     
     counter=0;
     d = 0;
@@ -76,12 +77,6 @@ for h = 1:length(stop_comb)
     x2 = cords(1,:);
     y2 = cords(2,:);
     
-    %     figure(1)
-    %     plot([x2 x2(1)],[y2 y2(1)],'k+:')
-    %
-    %     figure(2)
-    %     plot([x x(1)],[y y(1)],'k+:')
-    
     D = zeros(length(x2),1);
     if(size(cords,2) > 1)
         for i=1:length(x2)-1
@@ -89,26 +84,12 @@ for h = 1:length(stop_comb)
         end
         D(end) = sqrt(sum((x2(end) - x2(1)) .^ 2 + (y2(end) - y2(1)) .^ 2));
     end
-    
-        
-        if (h == 32689)
-            disp("route: " + route);
-            disp("cords " + cords);
-            disp("D: " + D);
-            disp("distD: " + sum(D));
-        end
    
     TourCost(h) = sum(D);
-    % StartCost = sum(D);
-    % TourCost = sum(D2);
     end
 end
 
 
 toc
 
-%%
 
-maxDist = max(TourCost);
-
-find(any(TourCost==maxDist,2))
